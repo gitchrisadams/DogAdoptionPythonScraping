@@ -1,4 +1,3 @@
-import cssutils
 from bs4 import BeautifulSoup
 
 

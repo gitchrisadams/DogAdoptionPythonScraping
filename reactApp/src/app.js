@@ -1,15 +1,86 @@
-var app = {
-  title: 'Python Animal Adoption Scraper',
-  subtitle: 'Scraping aint scapping...'
+class AnimalsAdoptMainApp extends React.Component {
+  render() {
+    const title = 'Python Animal Adoption Scraper';
+    const subtitle = 'Scraping aint scrapping';
+    const btnText = 'What should I do?';
+    const options = ['Thing one', 'Thing two', 'Thing four'];
+
+    return (
+      <div>
+        <Header title={title} subtitle={subtitle} />
+        <Action btnText={btnText} />
+        <Options options={options}/>
+        <AddOption />
+      </div>
+    );
+  }
 }
 
-var template = (
-  <div>
-    <h1>{app.title}</h1>
-    <p>{app.subtitle}</p>
-    <p>Location: Providence, RI</p>
-  </div>
-);
+class Header extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <h2>{this.props.subtitle}</h2>
+      </div>
+    );
+  }
+}
 
-var appRoot = document.getElementById('app');
-ReactDOM.render(template, appRoot);
+class Action extends React.Component {
+  render() {
+    return (
+      <div>
+        <button>{this.props.btnText}</button>
+      </div>
+    );
+  }
+}
+
+class Options extends React.Component {
+  render() {
+    return (
+
+      <div>
+      {
+        this.props.options.map((option, index) => <Option key={index} optionText={option} />)
+      }
+      </div>
+
+    );
+  }
+}
+
+class Option extends React.Component {
+  render() {
+    return(
+      <div>
+        {this.props.optionText}
+      </div>
+    );
+  }
+}
+
+class AddOption extends React.Component {
+  render() {
+    return(
+      <div>
+        AddOption component here
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<AnimalsAdoptMainApp />, document.getElementById('app'));
+
+
+
+
+
+
+
+
+
+
+
+
