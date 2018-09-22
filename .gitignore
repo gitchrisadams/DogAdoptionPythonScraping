@@ -1,2 +1,3 @@
 *.pyc
 reactapp/public/scripts/*.js
+reactapp/node_modules
