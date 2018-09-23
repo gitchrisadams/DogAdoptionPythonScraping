@@ -26,7 +26,44 @@ var IndecisionApp = function (_React$Component) {
     return _this;
   }
 
+  /* Life Cycle methods */
+
+
   _createClass(IndecisionApp, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      try {
+        /* Get json from local storage */
+        var json = localStorage.getItem('options');
+
+        /* get the json string as an array by parsing */
+        var options = JSON.parse(json);
+
+        /* Set state to local storage options so data persists */
+        options && this.setState(function () {
+          return { options: options };
+        });
+      } catch (e) {
+        // Do nothin
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        /* turn array into a json string */
+        var json = JSON.stringify(this.state.options);
+
+        /* store array in local storage */
+        localStorage.setItem('options', json);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('will unmount');
+    }
+  }, {
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
       // this.setState(() => {
@@ -158,6 +195,7 @@ var Action = function Action(props) {
   );
 };
 
+/* Display message text about adding option to get started if nothing currently added */
 var Options = function Options(props) {
   return React.createElement(
     'div',
@@ -166,6 +204,11 @@ var Options = function Options(props) {
       'button',
       { onClick: props.handleDeleteOptions },
       'Remove All'
+    ),
+    props.options.length === 0 && React.createElement(
+      'p',
+      null,
+      'Please add an option to get started!'
     ),
     props.options.map(function (option) {
       return React.createElement(Option, {
@@ -224,6 +267,11 @@ var AddOption = function (_React$Component2) {
       this.setState(function () {
         return { error: error };
       });
+
+      if (!error) {
+        // No error so wipe out text in input box, ready for next input
+        e.target.elements.option.value = '';
+      }
     }
   }, {
     key: 'render',

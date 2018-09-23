@@ -12,6 +12,40 @@ class IndecisionApp extends React.Component {
       options: props.options
     };
   }
+
+  /* Life Cycle methods */
+  componentDidMount() {
+    try {
+      /* Get json from local storage */
+      const json = localStorage.getItem('options');
+
+      /* get the json string as an array by parsing */
+      const options = JSON.parse(json);
+
+      /* Set state to local storage options so data persists */
+      options && this.setState(() => ({options}));
+    } catch (e) {
+        // Do nothin
+    }
+
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      /* turn array into a json string */
+      const json = JSON.stringify(this.state.options);
+
+      /* store array in local storage */
+      localStorage.setItem('options', json);
+
+    }
+  }
+
+  componentWillUnmount() {
+    console.log('will unmount');
+  }
+
   handleDeleteOptions() {
     // this.setState(() => {
     //   return {
@@ -115,10 +149,12 @@ const Action = (props) => {
   );
 };
 
+/* Display message text about adding option to get started if nothing currently added */
 const Options = (props) => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length === 0 && <p>Please add an option to get started!</p>}
       {
         props.options.map((option) => (
           <Option 
@@ -166,6 +202,11 @@ class AddOption extends React.Component {
     });
 
     this.setState(() => ({ error }));
+
+    if (!error) {
+      // No error so wipe out text in input box, ready for next input
+      e.target.elements.option.value = '';
+    }
   }
   render() {
     return (
