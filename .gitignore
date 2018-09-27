@@ -1,3 +1,7 @@
 *.pyc
 reactapp/public/scripts/*.js
 reactApp/node_modules
+reactApp/yarn.lock
+reactApp/public/bundle.js
+reactApp/package-lock.json
+reactApp/.DS_Store
